@@ -13,7 +13,6 @@ body {
 .dropdown > img {
   width: 1em;
   height: 0.5em;
-  /* margin-right: 5px */
   margin-left: 15px;
 }
 
@@ -34,10 +33,6 @@ body {
   width: 45%;
 }
 
-.to-do-list {
-  /* display: grid;
-  grid-template-columns: 0.5fr 6fr 0.5fr; */
-}
 .to-do-container:hover .x {
   visibility: visible;
   cursor: pointer;
@@ -196,17 +191,10 @@ input[type="checkbox"]:checked ~ .to-do {
   input[type="checkbox"]:after {
     line-height: 1.5em;
     content: "";
-    /* position: absolute; */
-
-    /* display: inline-block; */
     width: 50px;
     height: 50px;
     margin-left: -25px;
     margin-top: -20px;
-    /* margin-top: 5px; */
-    /* border: 2px solid #55868c; */
-    /* background: #fff; */
-    /* border-radius: 50%; */
   }
 
   .to-do-input {
@@ -219,11 +207,6 @@ input[type="checkbox"]:checked ~ .to-do {
     width: 90%;
   }
 
-  /* #bottom-container {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-  } */
   h1 {
     padding-left: 5%;
     margin-bottom: 5%;

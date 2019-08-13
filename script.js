@@ -1,5 +1,4 @@
 (function() {
-  //
   var userInput = "";
   var addButton = document.querySelector("button");
   var toDoList = document.querySelector(".to-do-list");
@@ -11,30 +10,33 @@
   var bottomCon = document.querySelector("#bottom-container");
   var clearBtn = document.querySelector("#clear");
 
+  //*********************************************************
+  //                      EVENT LISTENERS
+  //*********************************************************
+
+  //Event listener for the mark all done button left of input field
   dropdown.addEventListener("click", function(e) {
-    // console.log(e);
-    // console.log("you clicked the tick off all tasks button");
     let checkboxes = document.querySelectorAll("input[type=checkbox]");
     let checkboxesChecked = document.querySelectorAll(
       "input[type=checkbox]:checked"
     );
-
-    // console.log(checkboxes.length == checkboxes.checked.length);
+    // Loop over all checkoxes in to-do-list
     for (i = 0; i < checkboxes.length; i++) {
-      // console.log(checkboxes.length == checkboxesChecked.length);
+      // set all unchecked checkboxes to checked
       if (!checkboxes[i].checked) {
-        // console.log("unchecked chekbox");
         checkboxes[i].checked = true;
         count--;
         updateCount();
-      } else if (checkboxes.length == checkboxesChecked.length) {
+      }
+      //unchecks to do items in the list, when all items are marked as done
+      else if (checkboxes.length == checkboxesChecked.length) {
         checkboxes[i].checked = false;
         count++;
         updateCount();
       }
     }
   });
-
+  //Event Listener to edit items in the to do list
   toDoList.addEventListener("dblclick", function(e) {
     e.target.setAttribute("contenteditable", "true");
     e.target.focus();
@@ -44,19 +46,16 @@
       }
     });
   });
+  // Event Listener for mobile longpress to edit items in list
 
   // Create variable for setTimeout
   let timer;
-
-  // Set number of milliseconds for longpress
+  // number of milliseconds for longpress
   let longpress = 1000;
-
-  // let listItems = document.getElementsByClassName("to-do");
 
   toDoList.addEventListener(
     "touchstart",
     function(e) {
-      // var _this = this;
       var selectedToDo = e.target;
       timer = setTimeout(check, longpress);
 
@@ -76,16 +75,11 @@
   );
 
   toDoList.addEventListener("touchend", function(e) {
-    // On mouse up, we know it is no longer a longpress
+    // On touchend timer is reset
     clearTimeout(timer);
-    // e.target.setAttribute("contenteditable", "false");
   });
 
-  // toDoList.addEventListener("mouseout", function(e) {
-  //   clearTimeout(timer);
-  //   // e.target.setAttribute("contenteditable", "false");
-  // });
-
+  // Event listener for filter selection at the bottom of to do list
   filters.addEventListener("click", function(e) {
     if (e.target != filters) {
       if (!e.target.classList.contains("active")) {
@@ -93,47 +87,37 @@
         currActive.classList.remove("active");
         e.target.classList.add("active");
       }
+      // show all to dos
       if (e.target.textContent === "All") {
         showAlltoDos();
-        // console.log("you want all list elements");
-        // var toDos = document.querySelectorAll(".to-do-container");
-        // for (var i = 0; i < toDos.length; i++) {
-        //   console.log(toDos[i]);
-        //   toDos[i].classList.remove("hide");
-        // }
-      } else if (e.target.textContent === "Active") {
-        console.log("you want active list elems");
-        // console.log(
-        //   document.querySelectorAll('input[type="checkbox"]:checked:after')
-        // );
-        // var array = []
+      }
+      //show active to dos and hide completed
+      else if (e.target.textContent === "Active") {
         showAlltoDos();
         let checkboxes = document.querySelectorAll(
           "input[type=checkbox]:checked"
         );
-
         for (let i = 0; i < checkboxes.length; i++) {
-          // console.log(checkboxes[i].parentNode.classList);
           checkboxes[i].parentNode.classList.add("hide");
         }
-      } else {
-        // console.log("yu want completew list elems");
+      }
+      // show all completed to dos and hide active ones
+      else {
         showAlltoDos();
         let checkboxesAll = document.querySelectorAll("input[type=checkbox]");
         for (let i = 0; i < checkboxesAll.length; i++) {
-          // console.log(checkboxesAll[i].checked);
           if (checkboxesAll[i].checked === false) {
             checkboxesAll[i].parentNode.classList.add("hide");
-            // console.log(checkboxesAll[i]);
           }
         }
       }
     }
   });
 
+  //Event listener to clear completed items in the to do list
   clearBtn.addEventListener("click", function(e) {
     let checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
-
+    //loop over all checked checkboxes
     for (let i = 0; i < checkboxes.length; i++) {
       let parent = checkboxes[i].parentNode.parentNode;
       toDoItem = checkboxes[i].parentNode;
@@ -142,58 +126,28 @@
     clearBtn.classList.remove("show");
   });
 
+  //Event listener to remove items when the x is clicked and check items off the list
   toDoList.addEventListener("click", function(e) {
-    // console.log();
-    //check if click happens on delete x on an already checked off item
     let path = e.composedPath();
     let toDoItem = path[1];
     let toDoList = path[2];
-    // if (e.path) {
-    //   // do what works in chrome
-    // } else if (e.composedPath && e.composedPath()) {
-    //   console.log(e);
-    // let path = e.composedPath();
-    // let toDoItem = path[1];
-    // console.log(toDoItem);
-    // let toDoList = path[2];
-    // console.log(toDoList);
-    // toDoList.removeChild(toDoItem);
-    // console.log(e.composedPath(e.composedPath[1]));
-    // }
+    //check if click happens on delete x on an already checked off item counter needs to remain as is
     if (
       e.target.classList.contains("x") &&
       e.target.parentNode.childNodes[0].checked
     ) {
-      console.log(e);
-      // toDoList = e.path[1].parentNode;
-      // toDoItem = e.path[1];
-      // let path = e.composedPath();
-      // let toDoItem = path[1];
-      // console.log(toDoItem);
-      // let toDoList = path[2];
-      // console.log(toDoList);
       toDoList.removeChild(toDoItem);
-      console.log(" you want to delete an already checked off item");
-      //check if click happens on delete x on a not checked off item, set counter -1
-    } else if (
+    }
+    // check if click happens on delete x on a not checked off item, set counter -1
+    else if (
       e.target.classList.contains("x") &&
       !e.target.parentNode.childNodes[0].checked
     ) {
-      console.log(e.composedPath());
-      // toDoList = e.path[1].parentNode || (e.composedPath && e.composedPath());
-      // toDoItem = e.path[1];
-      // let path = e.composedPath();
-      // let toDoItem = path[1];
-      // console.log(toDoItem);
-      // let toDoList = path[2];
-      // console.log(toDoList);
       toDoList.removeChild(toDoItem);
-      // console.log(e);
       count--;
     }
-    //check if click happens on a checkbox that has not been ticked off, set counter -1
+    //check if click happens on a checkbox that has not been ticked off, set counter -1 and check box
     else if (e.target.type === "checkbox" && e.target.checked) {
-      console.log("you checked a box");
       count--;
       clearBtn.classList.add("show");
     }
@@ -202,32 +156,35 @@
     else if (e.target.type === "checkbox" && !e.target.checked) {
       count++;
     }
-
     updateCount(count);
     checkNumToDos();
   });
 
+  //
   userInputField.addEventListener("keydown", function(e) {
-    // console.log(e);
     if (e.keyCode === 13 || e.which === 13) {
       addItemToList();
     } else if (e.keyCode === 40 || e.which === 40) {
       console.log("you want to go down");
+      //write functionality for what to fo on arrow key down
     } else if (e.keyCode === 38 || e.which === 38) {
       console.log("you want to go up");
+      //write functionality for what to fo on arrow key up
     }
   });
+  //*********************************************************
+  //                      FUNCTIONS
+  //*********************************************************
 
-  //FUNCTIONS
   function getUserInput() {
     userInput = document.querySelector("input").value;
     document.querySelector("input").value = "";
-    // console.log(userInput);
     return userInput;
   }
 
   function addItemToList() {
     getUserInput();
+    //create divs for new input, user text input and set all needed classes
     var divToDoContainer = document.createElement("div");
     divToDoContainer.setAttribute("class", "to-do-container");
     var divBtn = document.createElement("input");
@@ -245,6 +202,7 @@
     divToDoContainer.appendChild(divTxt);
     divToDoContainer.appendChild(divX);
     count++;
+
     //change active class in filters to All
     let allFilters = document.querySelectorAll("#filters>div");
     for (let i = 0; i < allFilters.length; i++) {
@@ -254,16 +212,18 @@
         allFilters[i].classList.add("active");
       }
     }
+    // show all to dos as filter has been reset to All
     showAlltoDos();
+    // update counter
     updateCount(count);
     checkNumToDos();
-    // console.log(count);
   }
-
+  // sets the counter bottom left to reflect the current state of count
   function updateCount(currCount) {
     counter.textContent = `${count} Items in List`;
   }
 
+  // show all to dos in the list
   function showAlltoDos() {
     var toDos = document.querySelectorAll(".to-do-container");
     for (var i = 0; i < toDos.length; i++) {
@@ -271,6 +231,7 @@
     }
   }
 
+  // hide and show bottom menu filters based on the number of to dos in list
   function checkNumToDos() {
     let numChildNodes = document.querySelector(".to-do-list").childNodes.length;
     if (numChildNodes === 0) {
@@ -282,6 +243,3 @@
     }
   }
 })(); // end of IIFE
-
-//# JS snippet for email notification settings, e. g. Twitter
-//cb=document.querySelectorAll('input[type="checkbox"]');for(i in cb){cb[i].checked=false}
