@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Getting stuff done with lists</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Hind&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Listify to get stuff done</h1>
+      <div class="to-do-input">
+        <div class="dropdown"><img src="./img/dropdown.png" alt="" /></div>
+        <input
+          type="text"
+          name="user-to-dos"
+          id="input"
+          placeholder="What needs to get done?"
+        />
+        <!-- <button type="button" name="button">ADD</button> -->
+      </div>
+      <div class="list-container">
+        <div class="to-do-list"></div>
+        <div class="all"></div>
+        <div id="bottom-container" class="hide">
+          <div class="counter"></div>
+          <div id="filters">
+            <div class="active">All</div>
+            <div>Active</div>
+            <div>Completed</div>
+          </div>
+          <div id="clear">Clear completed</div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer">
+        <div class="item">
+          ✍︎ double click / on mobile longpress to edit list items
+        </div>
+        <div class="item">
+          ✔︎ mark all item done/undone by clicking the arrow next to the input
+          field
+        </div>
+      </div>
+    </footer>
+    <script src="script.js" charset="utf-8"></script>
+  </body>
+</html>
