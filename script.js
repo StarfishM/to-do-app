@@ -245,6 +245,15 @@
     divToDoContainer.appendChild(divTxt);
     divToDoContainer.appendChild(divX);
     count++;
+    //change active class in filters to All
+    let allFilters = document.querySelectorAll("#filters>div");
+    for (let i = 0; i < allFilters.length; i++) {
+      allFilters[i].classList.remove("active");
+      console.log(allFilters[i]);
+      if (allFilters[i].textContent === "All") {
+        allFilters[i].classList.add("active");
+      }
+    }
     updateCount(count);
     checkNumToDos();
     // console.log(count);
