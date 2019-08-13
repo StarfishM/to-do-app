@@ -254,6 +254,7 @@
         allFilters[i].classList.add("active");
       }
     }
+    showAlltoDos();
     updateCount(count);
     checkNumToDos();
     // console.log(count);
